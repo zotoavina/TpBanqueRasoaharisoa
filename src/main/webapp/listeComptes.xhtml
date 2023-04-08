@@ -16,37 +16,43 @@
 
             <ui:define name="content">
                 <f:view>
-                    <h:form>
-                        <p:dataTable value="#{listeComptes.allComptes}" var="compte"
-                                     paginator="true" rows="4"
-                                     rowsPerPageTemplate="2,4,8,10"
-                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}">
 
-                            <p:column>
+                    <h:form>
+                         <h1><h:outputText value="Liste des comptes"/></h1>
+                        <p:dataTable value="#{listeComptes.allComptes}" var="compte"
+                                     tableStyle="width:auto"
+                                     paginator="true" rows="4"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}">
+
+                            <p:column width="60" sortBy="#{compte.id}">
                                 <f:facet name="header">
                                     <h:outputText value="Id"/>
                                 </f:facet>
                                 <h:outputText value="#{compte.id}"/>
                             </p:column>
 
-                            <p:column sortBy="#{compte.nom}" filterBy="#{compte.nom}">
+                            <p:column width="300" sortBy="#{compte.nom}" filterBy="#{compte.nom}">
                                 <f:facet name="header">
                                     <h:outputText value="Nom"/>
                                 </f:facet>
                                 <h:outputText value="#{compte.nom}"/>
                             </p:column>
 
-                            <p:column sortBy="#{compte.solde}">
+                            <p:column style="text-align:right;" width="80" sortBy="#{compte.solde}">
                                 <f:facet name="header">
                                     <h:outputText value="Solde"/>
                                 </f:facet>
-                                <h:outputText value="#{compte.solde}"/>
+                                <h:outputText value="#{compte.solde}">
+                                    <f:convertNumber pattern="###,###,##0"/>
+                                </h:outputText>
                             </p:column>
 
                         </p:dataTable>
+
+                        <h:messages/>
                     </h:form>
-                    <h:messages/>
                 </f:view>
+
             </ui:define>
 
         </ui:composition>
