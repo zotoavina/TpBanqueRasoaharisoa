@@ -16,32 +16,46 @@ import mg.itu.tpbanquerasoaharisoa.entities.CompteBancaire;
  *
  * @author ASUS
  */
-@DataSourceDefinition (
-    className="com.mysql.cj.jdbc.MysqlDataSource",
-    name="java:app/jdbc/banque",
-    serverName="localhost",
-    portNumber=3306,
-    user="root",              
-    password="j@kartaE3",
-    databaseName="banque",
-    properties = {
-      "useSSL=false",
-      "allowPublicKeyRetrieval=true"
-    }
+@DataSourceDefinition(
+        className = "com.mysql.cj.jdbc.MysqlDataSource",
+        name = "java:app/jdbc/banque",
+        serverName = "localhost",
+        portNumber = 3306,
+        user = "root",
+        password = "j@kartaE3",
+        databaseName = "banque",
+        properties = {
+            "useSSL=false",
+            "allowPublicKeyRetrieval=true"
+        }
 )
 @Stateless
 public class GestionnaireCompte {
-    
+
     @PersistenceContext(unitName = "banquePU")
     private EntityManager em;
-    
-    
-    public void creerCompte(CompteBancaire compteBancaire){
+
+    public void creerCompte(CompteBancaire compteBancaire) {
         em.persist(compteBancaire);
     }
-    
-    public List<CompteBancaire> getAllComptes(){
+
+    public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
+    }
+
+    public CompteBancaire getCompteById(Long id) {
+        return em.find(CompteBancaire.class, id);
+    }
+
+    public void transfertArgent(CompteBancaire source, CompteBancaire destinataire, int montant) {
+        source.retirer(montant);
+        destinataire.deposer(montant);
+        update(source);
+        update(destinataire);
+    }
+
+    public CompteBancaire update(CompteBancaire compteBancaire) {
+        return em.merge(compteBancaire);
     }
 }
