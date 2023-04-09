@@ -22,17 +22,23 @@ public class ListeComptes implements Serializable {
 
     @EJB
     private GestionnaireCompte gestionnaireCompte;
-    
+
     private List<CompteBancaire> listeComptes;
-    
+
     /**
      * Creates a new instance of ListeComptes
      */
     public ListeComptes() {
     }
-    
-    public List<CompteBancaire> getAllComptes(){
-        return (listeComptes == null)? gestionnaireCompte.getAllComptes() : listeComptes;
+
+    public List<CompteBancaire> getAllComptes() {
+        return (listeComptes == null) ? gestionnaireCompte.getAllComptes() : listeComptes;
     }
-    
+
+    public String supprimerCompte(CompteBancaire compte) {
+        gestionnaireCompte.supprimerCompte(compte);
+        Util.addFlashInfoMessage("Compte de " + compte.getNom() + " supprimé");
+        return "listeComptes?faces-redirect=true";
+    }
+
 }

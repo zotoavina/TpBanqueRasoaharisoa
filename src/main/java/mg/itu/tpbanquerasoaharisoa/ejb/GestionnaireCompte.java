@@ -101,4 +101,8 @@ public class GestionnaireCompte {
         update(compte);
     }
     
+    public void supprimerCompte(CompteBancaire compte){
+        compte = em.merge(compte);
+        em.remove(compte);
+    }
 }
