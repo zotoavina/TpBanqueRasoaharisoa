@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <body>
+
+        <ui:composition template="./WEB-INF/templates/template_default.xhtml">
+
+            <ui:define name="top">
+                top
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form id="form">
+                    <h:panelGrid columns="3">
+                        Nom du compte à créer : 
+                        <h:inputText id="compte" size="20" value="#{ajout.nom}"
+                                     required="true"
+                                     converterMessage="Le nom ne peut être vide"/>
+                        <h:message for="compte"/>
+                        
+                        Montant initial : 
+                        <h:inputText id="montant" size="15" value="#{ajout.montant}"
+                                     required="true"
+                                     converterMessage="Le montant doit être un nombre entier"/>
+                        <h:message for="montant"/>
+
+                    </h:panelGrid>
+
+                    <h:commandButton value="Ajouter" action="#{ajout.ajoutCompte()}" />
+
+                </h:form>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
