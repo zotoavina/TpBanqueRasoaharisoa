@@ -18,7 +18,7 @@
                 <f:view>
 
                     <h:form>
-                         <h1><h:outputText value="Liste des comptes"/></h1>
+                        <h1><h:outputText value="Liste des comptes"/></h1>
                         <p:dataTable value="#{listeComptes.allComptes}" var="compte"
                                      tableStyle="width:auto"
                                      paginator="true" rows="4"
@@ -28,7 +28,8 @@
                                 <f:facet name="header">
                                     <h:outputText value="Id"/>
                                 </f:facet>
-                                <h:outputText value="#{compte.id}"/>
+                                <h:link outcome="mouvement?id=#{compte.id}" 
+                                        value="#{compte.id}"/>
                             </p:column>
 
                             <p:column width="300" sortBy="#{compte.nom}" filterBy="#{compte.nom}">

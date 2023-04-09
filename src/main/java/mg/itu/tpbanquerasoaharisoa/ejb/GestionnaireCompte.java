@@ -39,15 +39,31 @@ public class GestionnaireCompte {
         em.persist(compteBancaire);
     }
 
+    /**
+     * Selection de tous les comptes
+     * @return 
+     */
     public List<CompteBancaire> getAllComptes() {
         TypedQuery<CompteBancaire> query = em.createNamedQuery("CompteBancaire.findAll", CompteBancaire.class);
         return query.getResultList();
     }
 
+    /**
+     * Selection d'une compte à partir de son id
+     * @param id
+     * @return 
+     */
     public CompteBancaire getCompteById(Long id) {
         return em.find(CompteBancaire.class, id);
     }
 
+
+    /**
+     * Transfert d'argent entre deux comtpes
+     * @param source
+     * @param destinataire
+     * @param montant 
+     */
     public void transfertArgent(CompteBancaire source, CompteBancaire destinataire, int montant) {
         source.retirer(montant);
         destinataire.deposer(montant);
@@ -55,7 +71,34 @@ public class GestionnaireCompte {
         update(destinataire);
     }
 
+    /**
+     * Mise à jour d'une compte
+     * @param compteBancaire
+     * @return 
+     */
     public CompteBancaire update(CompteBancaire compteBancaire) {
         return em.merge(compteBancaire);
     }
+    
+
+    /**
+     * Retirer un certain montant d'une compte
+     * @param compte
+     * @param montant 
+     */
+    public void retirer(CompteBancaire compte, int montant){
+        compte.retirer(montant);
+        update(compte);
+    }
+    
+    /**
+     * Deposer un certain montant dans une compte
+     * @param compte
+     * @param montant 
+     */
+    public void deposer(CompteBancaire compte, int montant) {
+        compte.deposer(montant);
+        update(compte);
+    }
+    
 }
