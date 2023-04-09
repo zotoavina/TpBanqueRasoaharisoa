@@ -59,9 +59,30 @@ public class Transfert implements Serializable {
     }
 
     public String transferer() {
+        boolean erreur = false;
         CompteBancaire source = gestionnaireCompte.getCompteById(idSource);
+        if (source == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:source");
+            erreur = true;
+        } else {
+            if (montant > source.getSolde()) {
+                Util.messageErreur("Montant du transfert supérieur au solde du compte source", "Montant du transfert supérieur au solde du compte source", "form:montant");
+                erreur = true;
+            }
+        }
+
         CompteBancaire destinataire = gestionnaireCompte.getCompteById(idDestinataire);
+        if (destinataire == null) {
+            Util.messageErreur("Aucun compte avec cet id !", "Aucun compte avec cet id !", "form:destinataire");
+            erreur = true;
+        }
+
+        if (erreur) {
+            return null;
+        }
         gestionnaireCompte.transfertArgent(source, destinataire, montant);
-        return "listeComptes";
+        Util.addFlashInfoMessage("Transfert de " + montant + " Euro de " + source.getNom() + " vers " +
+                destinataire.getNom() + " effectué");
+        return "listeComptes?faces-redirect=true";
     }
 }
