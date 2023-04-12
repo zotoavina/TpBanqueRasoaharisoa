@@ -33,11 +33,11 @@ public class CompteBancaire implements Serializable {
     private Long id;
 
     private String nom;
-    
+
     private int solde;
-    
-    @OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<OperationBancaire> operations;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<OperationBancaire> operations = new ArrayList<>();
 
     public String getNom() {
         return nom;
@@ -54,31 +54,34 @@ public class CompteBancaire implements Serializable {
     public void setSolde(int solde) {
         this.solde = solde;
     }
-    
+
     public Long getId() {
         return id;
     }
-    
-    public List<OperationBancaire> getOperations(){
+
+    public List<OperationBancaire> getOperations() {
         return operations;
     }
-    
-    public CompteBancaire(){}
-    
-    public CompteBancaire(String nom, int solde){
-        this.nom = nom;
-        this.solde = solde;
-    }
-    
-    public void deposer(int montant){
-        solde += montant;
-    }
-    
-    public void retirer(int montant){
-        if(solde < montant) solde = 0;
-        else solde -= montant;
+
+    public CompteBancaire() {
     }
 
+    public CompteBancaire(String nom, int solde) {
+        this.nom = nom;
+        this.solde = solde;
+        operations.add(new OperationBancaire("Création du compte", solde));
+    }
+
+    public void deposer(int montant) {
+        solde += montant;
+        operations.add(new OperationBancaire("Crédit", montant));
+    }
+
+    public void retirer(int montant) {
+        int montantRetirer = (solde < montant) ? solde : montant;
+        solde -= montantRetirer;
+        operations.add(new OperationBancaire("Débit", -montantRetirer));
+    }
 
     @Override
     public int hashCode() {
@@ -104,5 +107,5 @@ public class CompteBancaire implements Serializable {
     public String toString() {
         return "mg.itu.tpbanquerasoaharisoa.entities.CompteBancaire[ id=" + id + " ]";
     }
-    
+
 }
