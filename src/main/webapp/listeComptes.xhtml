@@ -65,6 +65,16 @@
                                 <h:link outcome="modificationCompte?id=#{compte.id}"
                                                title="Modifier le compte de #{compte.nom}" value="modifier" />
                             </p:column>
+                            
+                            <p:column width="10">
+                                <f:facet name="header">
+                                    <h:outputText escape="false" value="Historique&lt;br/>opérations"/>
+                                </f:facet>
+                                <h:link outcome="operations"
+                                               title="Historique des opérations du #{compte.nom}" value="Détails" >
+                                    <f:param name="id" value="#{compte.id}" />
+                                </h:link>
+                            </p:column>
 
                         </p:dataTable>
 
