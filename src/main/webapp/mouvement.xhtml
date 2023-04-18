@@ -26,8 +26,9 @@
                 <h1>Mouvement sur le compte numéro #{mouvement.id}
                     de #{mouvement.compte.nom}</h1>
 
-                <h:form>
-                    <h:panelGrid columns="3">
+                <h:form id="form">
+                    <h:message for="panel"/>
+                    <h:panelGrid columns="3" id="panel">  
                         Nom du titulaire :
                         <h:outputText value="#{mouvement.compte.nom}"/>
                         <h:panelGroup/>

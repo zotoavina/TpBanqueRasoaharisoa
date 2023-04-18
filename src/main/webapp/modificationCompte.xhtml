@@ -25,21 +25,25 @@
                 <h1>Modification du compte numéro #{modification.id}
                     de #{modification.compte.nom}</h1>
 
-                <h:form>
-                    <h:panelGrid columns="3">
+                <h:form id="form">
+
+                    <h:message for="panel"/>
+
+                    <h:panelGrid columns="3" id="panel">
                         Nom du titulaire :
                         <h:inputText id="nom" value="#{modification.compte.nom}"
-                                    required="true"/>
+                                     required="true"/>
                         <h:message for="nom"/>
-                        
+
                         Solde du compte :
                         <h:inputText id="solde" value="#{modification.compte.solde}"
-                                    required="true"
-                                    validator="#{modification.validateSolde}"/>
+                                     required="true"
+                                     validator="#{modification.validateSolde}"/>
                         <h:message for="solde"/>
                     </h:panelGrid>
                     <h:commandButton action="#{modification.enregistrerModifications()}"
                                      value="Enregistrer les modifications"/>
+
                 </h:form>
 
             </ui:define>
